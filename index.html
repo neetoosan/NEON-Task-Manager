@@ -131,395 +131,579 @@
         .slide-in {
             animation: slideIn 0.5s ease-out forwards;
         }
+        
+        /* Auth pages */
+        .auth-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 5rem;
+        }
+        
+        .auth-toggle {
+            color: #6ec6ff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .auth-toggle:hover {
+            color: #ff6ec7;
+        }
     </style>
 </head>
 <body class="bg-darkBg">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- Header with neon title -->
-        <header class="mb-12 text-center">
-            <h1 class="neon-text text-5xl font-bold mb-4 text-neonPink animate-neon-flicker" style="--tw-text-color: #ff6ec7;">
-                Task<span class="text-neonBlue" style="--tw-text-color: #6ec6ff;">Glow</span>
-            </h1>
-            <p class="text-lg opacity-80">Your futuristic task manager with neon aesthetics</p>
-            
-            <div class="mt-6 flex justify-center space-x-4">
-                <div class="w-16 h-1 bg-neonPink rounded-full animate-pulse-slow"></div>
-                <div class="w-16 h-1 bg-neonBlue rounded-full animate-pulse-slow"></div>
-                <div class="w-16 h-1 bg-neonGreen rounded-full animate-pulse-slow"></div>
-                <div class="w-16 h-1 bg-neonPurple rounded-full animate-pulse-slow"></div>
-            </div>
-        </header>
-        
-        <!-- Main content -->
-        <main>
-            <!-- Add task form -->
-            <div class="glow-border rounded-xl p-1 mb-8 bg-gray-900/50 backdrop-blur-sm">
-                <div class="bg-gray-900 rounded-xl p-6">
-                    <h2 class="neon-text text-2xl mb-4 text-neonBlue" style="--tw-text-color: #6ec6ff;">Add New Task</h2>
-                    <form id="taskForm" class="space-y-4">
-                        <div>
-                            <label for="taskTitle" class="block mb-2 text-sm font-medium">Task Title</label>
-                            <input type="text" id="taskTitle" 
-                                   class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonPink focus:border-transparent transition"
-                                   placeholder="What needs to be done?" required>
-                        </div>
-                        
-                        <div>
-                            <label for="taskPriority" class="block mb-2 text-sm font-medium">Priority</label>
-                            <select id="taskPriority" 
-                                    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonBlue focus:border-transparent transition">
-                                <option value="low">Low</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="high">High</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label for="taskCategory" class="block mb-2 text-sm font-medium">Category</label>
-                            <div class="flex flex-wrap gap-2">
-                                <label class="inline-flex items-center">
-                                    <input type="radio" name="category" value="work" class="hidden peer" checked>
-                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonPurple/20 peer-checked:border-neonPurple peer-checked:text-neonPurple transition cursor-pointer">
-                                        <i class="fas fa-briefcase mr-2"></i> Work
-                                    </span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" name="category" value="personal" class="hidden peer">
-                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonPink/20 peer-checked:border-neonPink peer-checked:text-neonPink transition cursor-pointer">
-                                        <i class="fas fa-user mr-2"></i> Personal
-                                    </span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" name="category" value="shopping" class="hidden peer">
-                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonGreen/20 peer-checked:border-neonGreen peer-checked:text-neonGreen transition cursor-pointer">
-                                        <i class="fas fa-shopping-cart mr-2"></i> Shopping
-                                    </span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="radio" name="category" value="other" class="hidden peer">
-                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonBlue/20 peer-checked:border-neonBlue peer-checked:text-neonBlue transition cursor-pointer">
-                                        <i class="fas fa-ellipsis-h mr-2"></i> Other
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="w-full py-3 px-6 bg-gradient-to-r from-neonPink to-neonPurple rounded-lg font-medium text-white hover:opacity-90 transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-neonPink/20">
-                            <i class="fas fa-plus mr-2"></i> Add Task
-                        </button>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- Task filters -->
-            <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
-                <div class="flex items-center space-x-2">
-                    <span class="text-sm opacity-80">Filter:</span>
-                    <button id="filterAll" class="filter-btn active px-3 py-1 rounded-full bg-neonBlue/20 text-neonBlue border border-neonBlue text-sm">
-                        All
-                    </button>
-                    <button id="filterActive" class="filter-btn px-3 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700 text-sm hover:bg-gray-700 transition">
-                        Active
-                    </button>
-                    <button id="filterCompleted" class="filter-btn px-3 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700 text-sm hover:bg-gray-700 transition">
-                        Completed
-                    </button>
-                </div>
-                
-                <div class="flex items-center space-x-2">
-                    <span class="text-sm opacity-80">Sort by:</span>
-                    <select id="sortTasks" class="px-3 py-1 bg-gray-800 border border-gray-700 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-neonBlue">
-                        <option value="date">Date Added</option>
-                        <option value="priority">Priority</option>
-                        <option value="category">Category</option>
-                    </select>
-                </div>
-            </div>
-            
-            <!-- Task list -->
-            <div id="taskList" class="space-y-3">
-                <!-- Tasks will be added here dynamically -->
-            </div>
-            
-            <!-- Stats panel -->
-            <div id="statsPanel" class="mt-8 p-4 bg-gray-900/50 rounded-xl border border-gray-800 backdrop-blur-sm flex flex-wrap justify-between items-center gap-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-3 h-3 rounded-full bg-neonPink animate-pulse"></div>
-                    <span class="text-sm"><span id="totalTasks">0</span> total tasks</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <div class="w-3 h-3 rounded-full bg-neonBlue animate-pulse"></div>
-                    <span class="text-sm"><span id="activeTasks">0</span> active</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <div class="w-3 h-3 rounded-full bg-neonGreen animate-pulse"></div>
-                    <span class="text-sm"><span id="completedTasks">0</span> completed</span>
-                </div>
-                <button id="clearCompleted" class="text-sm text-neonPurple hover:text-neonPurple/80 transition flex items-center">
-                    <i class="fas fa-trash-alt mr-1"></i> Clear completed
-                </button>
-            </div>
-        </main>
-        
-        <!-- Floating decorations -->
-        <div class="fixed -left-20 top-1/4 w-40 h-40 rounded-full bg-neonPink/10 blur-xl -z-10 animate-float"></div>
-        <div class="fixed -right-20 bottom-1/4 w-48 h-48 rounded-full bg-neonBlue/10 blur-xl -z-10 animate-float" style="animation-delay: 1s;"></div>
-        <div class="fixed left-1/4 bottom-20 w-32 h-32 rounded-full bg-neonPurple/10 blur-xl -z-10 animate-float" style="animation-delay: 2s;"></div>
+    <div id="app">
+        <!-- Login/Signup pages will be rendered here -->
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM elements
-            const taskForm = document.getElementById('taskForm');
-            const taskList = document.getElementById('taskList');
-            const filterAll = document.getElementById('filterAll');
-            const filterActive = document.getElementById('filterActive');
-            const filterCompleted = document.getElementById('filterCompleted');
-            const sortTasks = document.getElementById('sortTasks');
-            const clearCompleted = document.getElementById('clearCompleted');
-            const totalTasksEl = document.getElementById('totalTasks');
-            const activeTasksEl = document.getElementById('activeTasks');
-            const completedTasksEl = document.getElementById('completedTasks');
+            // Main app container
+            const app = document.getElementById('app');
             
-            // Task data
-            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            let currentFilter = 'all';
+            // Check if user is logged in
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             
-            // Initialize
-            renderTasks();
-            updateStats();
+            if (currentUser) {
+                renderTaskManager(currentUser);
+            } else {
+                renderAuthPage('login');
+            }
             
-            // Event listeners
-            taskForm.addEventListener('submit', addTask);
-            filterAll.addEventListener('click', () => filterTasks('all'));
-            filterActive.addEventListener('click', () => filterTasks('active'));
-            filterCompleted.addEventListener('click', () => filterTasks('completed'));
-            sortTasks.addEventListener('change', renderTasks);
-            clearCompleted.addEventListener('click', clearCompletedTasks);
+            // Render authentication page (login/signup)
+            function renderAuthPage(page) {
+                const isLogin = page === 'login';
+                
+                app.innerHTML = `
+                    <div class="auth-container px-4">
+                        <div class="glow-border rounded-xl p-1 mb-8 bg-gray-900/50 backdrop-blur-sm">
+                            <div class="bg-gray-900 rounded-xl p-6">
+                                <h1 class="neon-text text-3xl mb-2 text-center text-neonPink animate-neon-flicker" style="--tw-text-color: #ff6ec7;">
+                                    Task<span class="text-neonBlue" style="--tw-text-color: #6ec6ff;">Glow</span>
+                                </h1>
+                                <p class="text-center mb-6 opacity-80">${isLogin ? 'Login to manage your tasks' : 'Create a new account'}</p>
+                                
+                                <form id="authForm" class="space-y-4">
+                                    ${!isLogin ? `
+                                    <div>
+                                        <label for="name" class="block mb-2 text-sm font-medium">Name</label>
+                                        <input type="text" id="name" 
+                                               class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonPink focus:border-transparent transition"
+                                               placeholder="Your name" ${!isLogin ? 'required' : ''}>
+                                    </div>
+                                    ` : ''}
+                                    
+                                    <div>
+                                        <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                                        <input type="email" id="email" 
+                                               class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonPink focus:border-transparent transition"
+                                               placeholder="your@email.com" required>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="password" class="block mb-2 text-sm font-medium">Password</label>
+                                        <input type="password" id="password" 
+                                               class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonPink focus:border-transparent transition"
+                                               placeholder="••••••••" required>
+                                    </div>
+                                    
+                                    ${!isLogin ? `
+                                    <div>
+                                        <label for="confirmPassword" class="block mb-2 text-sm font-medium">Confirm Password</label>
+                                        <input type="password" id="confirmPassword" 
+                                               class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonPink focus:border-transparent transition"
+                                               placeholder="••••••••" required>
+                                    </div>
+                                    ` : ''}
+                                    
+                                    <button type="submit" class="w-full py-3 px-6 bg-gradient-to-r from-neonPink to-neonPurple rounded-lg font-medium text-white hover:opacity-90 transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-neonPink/20">
+                                        <i class="fas ${isLogin ? 'fa-sign-in-alt' : 'fa-user-plus'} mr-2"></i> ${isLogin ? 'Login' : 'Sign Up'}
+                                    </button>
+                                    
+                                    <p class="text-center mt-4">
+                                        ${isLogin ? "Don't have an account?" : "Already have an account?"}
+                                        <span class="auth-toggle" onclick="renderAuthPage('${isLogin ? 'signup' : 'login'}')">
+                                            ${isLogin ? 'Sign up' : 'Login'}
+                                        </span>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating decorations -->
+                    <div class="fixed -left-20 top-1/4 w-40 h-40 rounded-full bg-neonPink/10 blur-xl -z-10 animate-float"></div>
+                    <div class="fixed -right-20 bottom-1/4 w-48 h-48 rounded-full bg-neonBlue/10 blur-xl -z-10 animate-float" style="animation-delay: 1s;"></div>
+                    <div class="fixed left-1/4 bottom-20 w-32 h-32 rounded-full bg-neonPurple/10 blur-xl -z-10 animate-float" style="animation-delay: 2s;"></div>
+                `;
+                
+                const authForm = document.getElementById('authForm');
+                authForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    
+                    if (isLogin) {
+                        handleLogin(email, password);
+                    } else {
+                        const name = document.getElementById('name').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+                        
+                        if (password !== confirmPassword) {
+                            alert('Passwords do not match!');
+                            return;
+                        }
+                        
+                        handleSignup(name, email, password);
+                    }
+                });
+            }
             
-            // Add new task
-            function addTask(e) {
-                e.preventDefault();
+            // Handle user login
+            function handleLogin(email, password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
                 
-                const titleInput = document.getElementById('taskTitle');
-                const prioritySelect = document.getElementById('taskPriority');
-                const categoryRadio = document.querySelector('input[name="category"]:checked');
-                
-                const newTask = {
-                    id: Date.now(),
-                    title: titleInput.value,
-                    priority: prioritySelect.value,
-                    category: categoryRadio.value,
-                    completed: false,
-                    createdAt: new Date().toISOString()
-                };
-                
-                tasks.unshift(newTask);
-                saveTasks();
-                renderTasks();
-                updateStats();
-                
-                // Reset form
-                titleInput.value = '';
-                titleInput.focus();
-                
-                // Show animation for new task
-                const taskElements = document.querySelectorAll('.task-item');
-                if (taskElements.length > 0) {
-                    taskElements[0].classList.add('slide-in');
+                if (user) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    renderTaskManager(user);
+                } else {
+                    alert('Invalid email or password!');
                 }
             }
             
-            // Render tasks based on current filter and sort
-            function renderTasks() {
-                // Filter tasks
-                let filteredTasks = [...tasks];
+            // Handle user signup
+            function handleSignup(name, email, password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
                 
-                if (currentFilter === 'active') {
-                    filteredTasks = filteredTasks.filter(task => !task.completed);
-                } else if (currentFilter === 'completed') {
-                    filteredTasks = filteredTasks.filter(task => task.completed);
-                }
-                
-                // Sort tasks
-                const sortValue = sortTasks.value;
-                
-                if (sortValue === 'priority') {
-                    const priorityOrder = { high: 1, medium: 2, low: 3 };
-                    filteredTasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-                } else if (sortValue === 'category') {
-                    filteredTasks.sort((a, b) => a.category.localeCompare(b.category));
-                } else {
-                    // Default sort by date (newest first)
-                    filteredTasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                }
-                
-                // Render tasks
-                taskList.innerHTML = '';
-                
-                if (filteredTasks.length === 0) {
-                    const emptyState = document.createElement('div');
-                    emptyState.className = 'text-center py-8 text-gray-500';
-                    emptyState.innerHTML = `
-                        <i class="fas fa-tasks text-4xl mb-4 opacity-30"></i>
-                        <p>No tasks found. Add a new task to get started!</p>
-                    `;
-                    taskList.appendChild(emptyState);
+                // Check if user already exists
+                if (users.some(u => u.email === email)) {
+                    alert('Email already registered!');
                     return;
                 }
                 
-                filteredTasks.forEach(task => {
-                    const taskElement = document.createElement('div');
-                    taskElement.className = `task-item glow-border rounded-lg p-1 ${task.completed ? 'opacity-70' : ''}`;
-                    taskElement.dataset.id = task.id;
-                    
-                    // Determine color based on category
-                    let colorClass, borderColor, bgColor;
-                    switch(task.category) {
-                        case 'work':
-                            colorClass = 'text-neonPurple';
-                            borderColor = 'border-neonPurple';
-                            bgColor = 'bg-neonPurple/10';
-                            break;
-                        case 'personal':
-                            colorClass = 'text-neonPink';
-                            borderColor = 'border-neonPink';
-                            bgColor = 'bg-neonPink/10';
-                            break;
-                        case 'shopping':
-                            colorClass = 'text-neonGreen';
-                            borderColor = 'border-neonGreen';
-                            bgColor = 'bg-neonGreen/10';
-                            break;
-                        default:
-                            colorClass = 'text-neonBlue';
-                            borderColor = 'border-neonBlue';
-                            bgColor = 'bg-neonBlue/10';
-                    }
-                    
-                    // Priority badge
-                    let priorityBadge;
-                    switch(task.priority) {
-                        case 'high':
-                            priorityBadge = `<span class="px-2 py-1 text-xs rounded-full bg-red-900/50 text-red-300 border border-red-700">High</span>`;
-                            break;
-                        case 'medium':
-                            priorityBadge = `<span class="px-2 py-1 text-xs rounded-full bg-yellow-900/50 text-yellow-300 border border-yellow-700">Medium</span>`;
-                            break;
-                        default:
-                            priorityBadge = `<span class="px-2 py-1 text-xs rounded-full bg-green-900/50 text-green-300 border border-green-700">Low</span>`;
-                    }
-                    
-                    taskElement.innerHTML = `
-                        <div class="rounded-lg p-4 ${bgColor} border ${borderColor}">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-start space-x-3">
-                                    <button class="toggle-complete mt-1 w-5 h-5 rounded-full border ${borderColor} flex items-center justify-center ${task.completed ? 'bg-neonGreen/20 border-neonGreen' : ''} transition-colors">
-                                        ${task.completed ? `<i class="fas fa-check text-neonGreen text-xs"></i>` : ''}
-                                    </button>
-                                    <div class="flex-1">
-                                        <h3 class="font-medium ${task.completed ? 'line-through text-gray-400' : ''}">${task.title}</h3>
-                                        <div class="flex flex-wrap items-center gap-2 mt-2">
-                                            <span class="text-xs px-2 py-1 rounded-full bg-gray-800/50 text-gray-300 border border-gray-700">
-                                                <i class="fas fa-${getCategoryIcon(task.category)} mr-1 ${colorClass}"></i>
-                                                ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
-                                            </span>
-                                            ${priorityBadge}
-                                            <span class="text-xs text-gray-500">${formatDate(task.createdAt)}</span>
+                const newUser = {
+                    id: Date.now(),
+                    name,
+                    email,
+                    password,
+                    createdAt: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(newUser));
+                
+                // Initialize empty tasks for new user
+                const userTasks = {};
+                userTasks[newUser.id] = getSampleTasks();
+                localStorage.setItem('tasks', JSON.stringify(userTasks));
+                
+                renderTaskManager(newUser);
+            }
+            
+            // Render the main task manager
+            function renderTaskManager(user) {
+                app.innerHTML = `
+                    <div class="container mx-auto px-4 py-8 max-w-4xl">
+                        <!-- Header with neon title and user info -->
+                        <header class="mb-8 flex justify-between items-center">
+                            <div>
+                                <h1 class="neon-text text-4xl font-bold mb-1 text-neonPink animate-neon-flicker" style="--tw-text-color: #ff6ec7;">
+                                    Task<span class="text-neonBlue" style="--tw-text-color: #6ec6ff;">Glow</span>
+                                </h1>
+                                <p class="text-sm opacity-80">Welcome back, ${user.name}</p>
+                            </div>
+                            <button id="logoutBtn" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg border border-gray-700 text-sm transition flex items-center">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            </button>
+                        </header>
+                        
+                        <!-- Main content -->
+                        <main>
+                            <!-- Add task form -->
+                            <div class="glow-border rounded-xl p-1 mb-8 bg-gray-900/50 backdrop-blur-sm">
+                                <div class="bg-gray-900 rounded-xl p-6">
+                                    <h2 class="neon-text text-2xl mb-4 text-neonBlue" style="--tw-text-color: #6ec6ff;">Add New Task</h2>
+                                    <form id="taskForm" class="space-y-4">
+                                        <div>
+                                            <label for="taskTitle" class="block mb-2 text-sm font-medium">Task Title</label>
+                                            <input type="text" id="taskTitle" 
+                                                   class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonPink focus:border-transparent transition"
+                                                   placeholder="What needs to be done?" required>
                                         </div>
-                                    </div>
+                                        
+                                        <div>
+                                            <label for="taskPriority" class="block mb-2 text-sm font-medium">Priority</label>
+                                            <select id="taskPriority" 
+                                                    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neonBlue focus:border-transparent transition">
+                                                <option value="low">Low</option>
+                                                <option value="medium" selected>Medium</option>
+                                                <option value="high">High</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="taskCategory" class="block mb-2 text-sm font-medium">Category</label>
+                                            <div class="flex flex-wrap gap-2">
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="category" value="work" class="hidden peer" checked>
+                                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonPurple/20 peer-checked:border-neonPurple peer-checked:text-neonPurple transition cursor-pointer">
+                                                        <i class="fas fa-briefcase mr-2"></i> Work
+                                                    </span>
+                                                </label>
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="category" value="personal" class="hidden peer">
+                                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonPink/20 peer-checked:border-neonPink peer-checked:text-neonPink transition cursor-pointer">
+                                                        <i class="fas fa-user mr-2"></i> Personal
+                                                    </span>
+                                                </label>
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="category" value="shopping" class="hidden peer">
+                                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonGreen/20 peer-checked:border-neonGreen peer-checked:text-neonGreen transition cursor-pointer">
+                                                        <i class="fas fa-shopping-cart mr-2"></i> Shopping
+                                                    </span>
+                                                </label>
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="category" value="other" class="hidden peer">
+                                                    <span class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg peer-checked:bg-neonBlue/20 peer-checked:border-neonBlue peer-checked:text-neonBlue transition cursor-pointer">
+                                                        <i class="fas fa-ellipsis-h mr-2"></i> Other
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full py-3 px-6 bg-gradient-to-r from-neonPink to-neonPurple rounded-lg font-medium text-white hover:opacity-90 transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-neonPink/20">
+                                            <i class="fas fa-plus mr-2"></i> Add Task
+                                        </button>
+                                    </form>
                                 </div>
-                                <button class="delete-task text-gray-500 hover:text-red-400 transition">
-                                    <i class="fas fa-times"></i>
+                            </div>
+                            
+                            <!-- Task filters -->
+                            <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm opacity-80">Filter:</span>
+                                    <button id="filterAll" class="filter-btn active px-3 py-1 rounded-full bg-neonBlue/20 text-neonBlue border border-neonBlue text-sm">
+                                        All
+                                    </button>
+                                    <button id="filterActive" class="filter-btn px-3 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700 text-sm hover:bg-gray-700 transition">
+                                        Active
+                                    </button>
+                                    <button id="filterCompleted" class="filter-btn px-3 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700 text-sm hover:bg-gray-700 transition">
+                                        Completed
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm opacity-80">Sort by:</span>
+                                    <select id="sortTasks" class="px-3 py-1 bg-gray-800 border border-gray-700 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-neonBlue">
+                                        <option value="date">Date Added</option>
+                                        <option value="priority">Priority</option>
+                                        <option value="category">Category</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Task list -->
+                            <div id="taskList" class="space-y-3">
+                                <!-- Tasks will be added here dynamically -->
+                            </div>
+                            
+                            <!-- Stats panel -->
+                            <div id="statsPanel" class="mt-8 p-4 bg-gray-900/50 rounded-xl border border-gray-800 backdrop-blur-sm flex flex-wrap justify-between items-center gap-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-neonPink animate-pulse"></div>
+                                    <span class="text-sm"><span id="totalTasks">0</span> total tasks</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-neonBlue animate-pulse"></div>
+                                    <span class="text-sm"><span id="activeTasks">0</span> active</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-neonGreen animate-pulse"></div>
+                                    <span class="text-sm"><span id="completedTasks">0</span> completed</span>
+                                </div>
+                                <button id="clearCompleted" class="text-sm text-neonPurple hover:text-neonPurple/80 transition flex items-center">
+                                    <i class="fas fa-trash-alt mr-1"></i> Clear completed
                                 </button>
                             </div>
-                        </div>
-                    `;
-                    
-                    taskList.appendChild(taskElement);
-                    
-                    // Add event listeners to the new task
-                    const toggleBtn = taskElement.querySelector('.toggle-complete');
-                    const deleteBtn = taskElement.querySelector('.delete-task');
-                    
-                    toggleBtn.addEventListener('click', () => toggleComplete(task.id));
-                    deleteBtn.addEventListener('click', () => deleteTask(task.id));
+                        </main>
+                        
+                        <!-- Floating decorations -->
+                        <div class="fixed -left-20 top-1/4 w-40 h-40 rounded-full bg-neonPink/10 blur-xl -z-10 animate-float"></div>
+                        <div class="fixed -right-20 bottom-1/4 w-48 h-48 rounded-full bg-neonBlue/10 blur-xl -z-10 animate-float" style="animation-delay: 1s;"></div>
+                        <div class="fixed left-1/4 bottom-20 w-32 h-32 rounded-full bg-neonPurple/10 blur-xl -z-10 animate-float" style="animation-delay: 2s;"></div>
+                    </div>
+                `;
+                
+                // Initialize task manager functionality
+                initTaskManager(user);
+                
+                // Add logout event listener
+                document.getElementById('logoutBtn').addEventListener('click', function() {
+                    localStorage.removeItem('currentUser');
+                    renderAuthPage('login');
                 });
             }
             
-            // Toggle task completion status
-            function toggleComplete(taskId) {
-                const taskIndex = tasks.findIndex(task => task.id == taskId);
-                if (taskIndex !== -1) {
-                    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+            // Initialize task manager functionality
+            function initTaskManager(user) {
+                // DOM elements
+                const taskForm = document.getElementById('taskForm');
+                const taskList = document.getElementById('taskList');
+                const filterAll = document.getElementById('filterAll');
+                const filterActive = document.getElementById('filterActive');
+                const filterCompleted = document.getElementById('filterCompleted');
+                const sortTasks = document.getElementById('sortTasks');
+                const clearCompleted = document.getElementById('clearCompleted');
+                const totalTasksEl = document.getElementById('totalTasks');
+                const activeTasksEl = document.getElementById('activeTasks');
+                const completedTasksEl = document.getElementById('completedTasks');
+                
+                // Task data
+                const allTasks = JSON.parse(localStorage.getItem('tasks')) || {};
+                let tasks = allTasks[user.id] || [];
+                let currentFilter = 'all';
+                
+                // Initialize
+                renderTasks();
+                updateStats();
+                
+                // Event listeners
+                taskForm.addEventListener('submit', addTask);
+                filterAll.addEventListener('click', () => filterTasks('all'));
+                filterActive.addEventListener('click', () => filterTasks('active'));
+                filterCompleted.addEventListener('click', () => filterTasks('completed'));
+                sortTasks.addEventListener('change', renderTasks);
+                clearCompleted.addEventListener('click', clearCompletedTasks);
+                
+                // Add new task
+                function addTask(e) {
+                    e.preventDefault();
+                    
+                    const titleInput = document.getElementById('taskTitle');
+                    const prioritySelect = document.getElementById('taskPriority');
+                    const categoryRadio = document.querySelector('input[name="category"]:checked');
+                    
+                    const newTask = {
+                        id: Date.now(),
+                        title: titleInput.value,
+                        priority: prioritySelect.value,
+                        category: categoryRadio.value,
+                        completed: false,
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    tasks.unshift(newTask);
                     saveTasks();
                     renderTasks();
                     updateStats();
-                }
-            }
-            
-            // Delete task
-            function deleteTask(taskId) {
-                // Add animation before deletion
-                const taskElement = document.querySelector(`.task-item[data-id="${taskId}"]`);
-                if (taskElement) {
-                    taskElement.style.transform = 'translateX(-100%)';
-                    taskElement.style.opacity = '0';
-                    taskElement.style.transition = 'all 0.3s ease';
                     
-                    setTimeout(() => {
-                        tasks = tasks.filter(task => task.id != taskId);
+                    // Reset form
+                    titleInput.value = '';
+                    titleInput.focus();
+                    
+                    // Show animation for new task
+                    const taskElements = document.querySelectorAll('.task-item');
+                    if (taskElements.length > 0) {
+                        taskElements[0].classList.add('slide-in');
+                    }
+                }
+                
+                // Render tasks based on current filter and sort
+                function renderTasks() {
+                    // Filter tasks
+                    let filteredTasks = [...tasks];
+                    
+                    if (currentFilter === 'active') {
+                        filteredTasks = filteredTasks.filter(task => !task.completed);
+                    } else if (currentFilter === 'completed') {
+                        filteredTasks = filteredTasks.filter(task => task.completed);
+                    }
+                    
+                    // Sort tasks
+                    const sortValue = sortTasks.value;
+                    
+                    if (sortValue === 'priority') {
+                        const priorityOrder = { high: 1, medium: 2, low: 3 };
+                        filteredTasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+                    } else if (sortValue === 'category') {
+                        filteredTasks.sort((a, b) => a.category.localeCompare(b.category));
+                    } else {
+                        // Default sort by date (newest first)
+                        filteredTasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    }
+                    
+                    // Render tasks
+                    taskList.innerHTML = '';
+                    
+                    if (filteredTasks.length === 0) {
+                        const emptyState = document.createElement('div');
+                        emptyState.className = 'text-center py-8 text-gray-500';
+                        emptyState.innerHTML = `
+                            <i class="fas fa-tasks text-4xl mb-4 opacity-30"></i>
+                            <p>No tasks found. Add a new task to get started!</p>
+                        `;
+                        taskList.appendChild(emptyState);
+                        return;
+                    }
+                    
+                    filteredTasks.forEach(task => {
+                        const taskElement = document.createElement('div');
+                        taskElement.className = `task-item glow-border rounded-lg p-1 ${task.completed ? 'opacity-70' : ''}`;
+                        taskElement.dataset.id = task.id;
+                        
+                        // Determine color based on category
+                        let colorClass, borderColor, bgColor;
+                        switch(task.category) {
+                            case 'work':
+                                colorClass = 'text-neonPurple';
+                                borderColor = 'border-neonPurple';
+                                bgColor = 'bg-neonPurple/10';
+                                break;
+                            case 'personal':
+                                colorClass = 'text-neonPink';
+                                borderColor = 'border-neonPink';
+                                bgColor = 'bg-neonPink/10';
+                                break;
+                            case 'shopping':
+                                colorClass = 'text-neonGreen';
+                                borderColor = 'border-neonGreen';
+                                bgColor = 'bg-neonGreen/10';
+                                break;
+                            default:
+                                colorClass = 'text-neonBlue';
+                                borderColor = 'border-neonBlue';
+                                bgColor = 'bg-neonBlue/10';
+                        }
+                        
+                        // Priority badge
+                        let priorityBadge;
+                        switch(task.priority) {
+                            case 'high':
+                                priorityBadge = `<span class="px-2 py-1 text-xs rounded-full bg-red-900/50 text-red-300 border border-red-700">High</span>`;
+                                break;
+                            case 'medium':
+                                priorityBadge = `<span class="px-2 py-1 text-xs rounded-full bg-yellow-900/50 text-yellow-300 border border-yellow-700">Medium</span>`;
+                                break;
+                            default:
+                                priorityBadge = `<span class="px-2 py-1 text-xs rounded-full bg-green-900/50 text-green-300 border border-green-700">Low</span>`;
+                        }
+                        
+                        taskElement.innerHTML = `
+                            <div class="rounded-lg p-4 ${bgColor} border ${borderColor}">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-start space-x-3">
+                                        <button class="toggle-complete mt-1 w-5 h-5 rounded-full border ${borderColor} flex items-center justify-center ${task.completed ? 'bg-neonGreen/20 border-neonGreen' : ''} transition-colors">
+                                            ${task.completed ? `<i class="fas fa-check text-neonGreen text-xs"></i>` : ''}
+                                        </button>
+                                        <div class="flex-1">
+                                            <h3 class="font-medium ${task.completed ? 'line-through text-gray-400' : ''}">${task.title}</h3>
+                                            <div class="flex flex-wrap items-center gap-2 mt-2">
+                                                <span class="text-xs px-2 py-1 rounded-full bg-gray-800/50 text-gray-300 border border-gray-700">
+                                                    <i class="fas fa-${getCategoryIcon(task.category)} mr-1 ${colorClass}"></i>
+                                                    ${task.category.charAt(0).toUpperCase() + task.category.slice(1)}
+                                                </span>
+                                                ${priorityBadge}
+                                                <span class="text-xs text-gray-500">${formatDate(task.createdAt)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="delete-task text-gray-500 hover:text-red-400 transition">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        
+                        taskList.appendChild(taskElement);
+                        
+                        // Add event listeners to the new task
+                        const toggleBtn = taskElement.querySelector('.toggle-complete');
+                        const deleteBtn = taskElement.querySelector('.delete-task');
+                        
+                        toggleBtn.addEventListener('click', () => toggleComplete(task.id));
+                        deleteBtn.addEventListener('click', () => deleteTask(task.id));
+                    });
+                }
+                
+                // Toggle task completion status
+                function toggleComplete(taskId) {
+                    const taskIndex = tasks.findIndex(task => task.id == taskId);
+                    if (taskIndex !== -1) {
+                        tasks[taskIndex].completed = !tasks[taskIndex].completed;
                         saveTasks();
                         renderTasks();
                         updateStats();
+                    }
+                }
+                
+                // Delete task
+                function deleteTask(taskId) {
+                    // Add animation before deletion
+                    const taskElement = document.querySelector(`.task-item[data-id="${taskId}"]`);
+                    if (taskElement) {
+                        taskElement.style.transform = 'translateX(-100%)';
+                        taskElement.style.opacity = '0';
+                        taskElement.style.transition = 'all 0.3s ease';
+                        
+                        setTimeout(() => {
+                            tasks = tasks.filter(task => task.id != taskId);
+                            saveTasks();
+                            renderTasks();
+                            updateStats();
+                        }, 300);
+                    }
+                }
+                
+                // Filter tasks
+                function filterTasks(filter) {
+                    currentFilter = filter;
+                    
+                    // Update active filter button
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active', 'bg-neonBlue/20', 'text-neonBlue', 'border-neonBlue');
+                        btn.classList.add('bg-gray-800', 'text-gray-300', 'border-gray-700');
+                    });
+                    
+                    const activeBtn = document.getElementById(`filter${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
+                    if (activeBtn) {
+                        activeBtn.classList.add('active', 'bg-neonBlue/20', 'text-neonBlue', 'border-neonBlue');
+                        activeBtn.classList.remove('bg-gray-800', 'text-gray-300', 'border-gray-700');
+                    }
+                    
+                    renderTasks();
+                }
+                
+                // Clear completed tasks
+                function clearCompletedTasks() {
+                    // Add confirmation with nice animation
+                    const statsPanel = document.getElementById('statsPanel');
+                    statsPanel.classList.add('animate-pulse');
+                    
+                    setTimeout(() => {
+                        tasks = tasks.filter(task => !task.completed);
+                        saveTasks();
+                        renderTasks();
+                        updateStats();
+                        statsPanel.classList.remove('animate-pulse');
                     }, 300);
                 }
-            }
-            
-            // Filter tasks
-            function filterTasks(filter) {
-                currentFilter = filter;
                 
-                // Update active filter button
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active', 'bg-neonBlue/20', 'text-neonBlue', 'border-neonBlue');
-                    btn.classList.add('bg-gray-800', 'text-gray-300', 'border-gray-700');
-                });
-                
-                const activeBtn = document.getElementById(`filter${filter.charAt(0).toUpperCase() + filter.slice(1)}`);
-                if (activeBtn) {
-                    activeBtn.classList.add('active', 'bg-neonBlue/20', 'text-neonBlue', 'border-neonBlue');
-                    activeBtn.classList.remove('bg-gray-800', 'text-gray-300', 'border-gray-700');
+                // Update stats
+                function updateStats() {
+                    totalTasksEl.textContent = tasks.length;
+                    activeTasksEl.textContent = tasks.filter(task => !task.completed).length;
+                    completedTasksEl.textContent = tasks.filter(task => task.completed).length;
                 }
                 
-                renderTasks();
-            }
-            
-            // Clear completed tasks
-            function clearCompletedTasks() {
-                // Add confirmation with nice animation
-                const statsPanel = document.getElementById('statsPanel');
-                statsPanel.classList.add('animate-pulse');
-                
-                setTimeout(() => {
-                    tasks = tasks.filter(task => !task.completed);
-                    saveTasks();
-                    renderTasks();
-                    updateStats();
-                    statsPanel.classList.remove('animate-pulse');
-                }, 300);
-            }
-            
-            // Update stats
-            function updateStats() {
-                totalTasksEl.textContent = tasks.length;
-                activeTasksEl.textContent = tasks.filter(task => !task.completed).length;
-                completedTasksEl.textContent = tasks.filter(task => task.completed).length;
-            }
-            
-            // Save tasks to localStorage
-            function saveTasks() {
-                localStorage.setItem('tasks', JSON.stringify(tasks));
+                // Save tasks to localStorage
+                function saveTasks() {
+                    const allTasks = JSON.parse(localStorage.getItem('tasks')) || {};
+                    allTasks[user.id] = tasks;
+                    localStorage.setItem('tasks', JSON.stringify(allTasks));
+                }
             }
             
             // Helper functions
@@ -543,9 +727,8 @@
                 });
             }
             
-            // Add some sample tasks if empty
-            if (tasks.length === 0) {
-                tasks = [
+            function getSampleTasks() {
+                return [
                     {
                         id: 1,
                         title: 'Complete TaskGlow project',
@@ -571,10 +754,10 @@
                         createdAt: new Date(Date.now() - 172800000).toISOString()
                     }
                 ];
-                saveTasks();
-                renderTasks();
-                updateStats();
             }
+            
+            // Make renderAuthPage available globally for the auth toggle links
+            window.renderAuthPage = renderAuthPage;
         });
     </script>
 </body>
